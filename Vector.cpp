@@ -67,3 +67,15 @@ void Vector::setVector(float xx, float yy, float zz) {
     this->y = yy;
     this->z = zz;
 }
+
+void Vector::dot(float f) {
+    this->x *= f;
+    this->y *= f;
+    this->z *= f;
+}
+
+void Vector::setVector(Vector v) {
+    this->x = v.x;
+    this->y = v.y;
+    this->z = v.z;
+}

@@ -28,8 +28,10 @@ public:
 
     void add(Vector v);
     void sub(Vector v);
+    void dot(float f);
 
     void setVector(float xx, float yy, float zz);
+    void setVector(Vector v);
     void showVector();
 };
 
