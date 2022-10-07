@@ -41,18 +41,34 @@ int main()
     c.showVector();
 
     c.setVector(a);
-    c.dot(2.5);
+    c.multiply(2.5);
     std::cout<<"C = A * 2.5: ";
     c.showVector();
 
     c.setVector(a);
-    c.dot(0.3);
+    c.multiply(0.3);
     std::cout<<"C = A * 0.3: ";
     c.showVector();
 
     c.setVector(a);
-    c.dot(-5);
+    c.multiply(-5);
     std::cout<<"C = A * -5: ";
+    c.showVector();
+
+    std::cout<<"Length of A: "<<a.length()<<"\n";
+    std::cout<<"Length of B: "<<b.length()<<"\n";
+
+    c.setVector(a);
+    c.normalize();
+    std::cout<<"Normalized A: ";
+    c.showVector();
+
+    c.dot(a,b);
+    std::cout<<"C = A * B: ";
+    c.showVector();
+
+    c.cross(a,b);
+    std::cout<<"C = A x B: ";
     c.showVector();
 
     return 0;

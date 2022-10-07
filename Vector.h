@@ -28,7 +28,11 @@ public:
 
     void add(Vector v);
     void sub(Vector v);
-    void dot(float f);
+    void multiply(float f);
+    float length();
+    void normalize();
+    void dot(Vector v1, Vector v2);
+    void cross(Vector v1, Vector v2);
 
     void setVector(float xx, float yy, float zz);
     void setVector(Vector v);
