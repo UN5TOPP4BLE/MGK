@@ -5,41 +5,57 @@
 #include <string>
 #include <iostream>
 #include "Vector.h"
+#include <cmath>
 
+float vectorAngle(Vector v1, Vector v2) {
+    Vector c(0,0,0);
+    c.dot(v1, v2);
+
+    float licznik = c.getX()+c.getY()+c.getZ();
+    float mianownik = std::abs(v1.length() * v2.length());
+    return acos(licznik/mianownik) * (180/M_PI);
+}
 
 
 int main()
 {
-    Vector a(1.0,2.0,3.0);
+    //tworzenie wektora A
+    Vector a(1,2,3);
     std::cout<<"Wektor A: ";
     a.showVector();
 
-    Vector b(4.0,5.0,6.0);
+    //tworzenie wektora B
+    Vector b(4,5,6);
     std::cout<<"Wektor B: ";
     b.showVector();
 
+    //dodawanie
     Vector c(0,0,0);
     std::cout<<"C = A + B: ";
     c.add(a);
     c.add(b);
     c.showVector();
 
+    //dodawanie odwrotna kolejnosc
     c.setVector(0,0,0);
     std::cout<<"C = B + A: ";
     c.add(b);
     c.add(a);
     c.showVector();
 
+    //odejmowanie
     c.setVector(a);
     c.sub(b);
     std::cout<<"C = A - B: ";
     c.showVector();
 
+    //odejmowanie odwrotna kolejnosc
     c.setVector(b);
     c.sub(a);
     std::cout<<"C = B - A: ";
     c.showVector();
 
+    //mnozenie przez liczbe
     c.setVector(a);
     c.multiply(2.5);
     std::cout<<"C = A * 2.5: ";
@@ -55,21 +71,38 @@ int main()
     std::cout<<"C = A * -5: ";
     c.showVector();
 
+    //dlugosc wektorow
     std::cout<<"Length of A: "<<a.length()<<"\n";
     std::cout<<"Length of B: "<<b.length()<<"\n";
 
+    //normalizowanie wektora
     c.setVector(a);
     c.normalize();
     std::cout<<"Normalized A: ";
     c.showVector();
 
+    //iloczyn skalarny
     c.dot(a,b);
     std::cout<<"C = A * B: ";
     c.showVector();
 
+    //iloczyn wektorowy
     c.cross(a,b);
     std::cout<<"C = A x B: ";
     c.showVector();
+
+    //kat pomiedzy wektorami
+    std::cout<<"Kat pomiedzy A i B: "<<vectorAngle(a,b)<<" stopni\n\n\n";
+
+
+
+    //podpunkt 3 z zadania
+    a.setVector(0,3,0); std::cout<<"Wektor A: "; a.showVector();
+    b.setVector(5,5,0); std::cout<<"Wektor B: "; b.showVector();
+
+    std::cout<<"Kat pomiedzy A i B: "<<vectorAngle(a,b)<<" stopni\n";
+
+
 
     return 0;
 }
