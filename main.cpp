@@ -97,12 +97,21 @@ int main()
 
 
     //podpunkt 3 z zadania
+    std::cout<<"Znajdz kat pomiedzy wektorami:\n";
     a.setVector(0,3,0); std::cout<<"Wektor A: "; a.showVector();
     b.setVector(5,5,0); std::cout<<"Wektor B: "; b.showVector();
 
-    std::cout<<"Kat pomiedzy A i B: "<<vectorAngle(a,b)<<" stopni\n";
+    std::cout<<"Kat pomiedzy A i B: "<<vectorAngle(a,b)<<" stopni\n\n";
 
+    //podpunkt 4 z zadania
+    std::cout<<"Znajdz wektor prostopadly do wektorow [4,5,1] i [4,1,3]\n";
+    a.setVector(4,5,1);
+    b.setVector(4,1,3);
+    c.cross(a,b);
+    std::cout<<"Wektor prostopadly ma wartosci "; c.showVector();
 
+    c.normalize();
+    std::cout<<"Wektor znormalizowany: "; c.showVector();
 
     return 0;
 }
