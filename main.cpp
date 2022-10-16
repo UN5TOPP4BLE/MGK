@@ -84,7 +84,7 @@ int main()
     //iloczyn skalarny
     c.dot(a,b);
     std::cout<<"C = A * B: ";
-    c.showVector();
+    c.showSumVector();
 
     //iloczyn wektorowy
     c.cross(a,b);

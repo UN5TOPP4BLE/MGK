@@ -37,6 +37,7 @@ public:
     void setVector(float xx, float yy, float zz);
     void setVector(Vector v);
     void showVector();
+    void showSumVector();
 };
 
 

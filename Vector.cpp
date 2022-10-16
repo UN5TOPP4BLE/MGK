@@ -106,3 +106,7 @@ void Vector::cross(Vector v1, Vector v2) {
     this->y = v1.z * v2.x - v1.x * v2.z;
     this->z = v1.x * v2.y - v1.y * v2.x;
 }
+
+void Vector::showSumVector() {
+    std::cout<<"["<<this->x<<", "<<this->y<<", "<<this->z<<"] = "<<(float)this->x + (float)this->y + (float)this->z<<"\n";
+}
