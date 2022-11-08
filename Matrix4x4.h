@@ -39,6 +39,8 @@ public:
 
     void trans(Matrix4x4 m1);
 
+    void inverse(Matrix4x4 m1);
+
 
 };
 

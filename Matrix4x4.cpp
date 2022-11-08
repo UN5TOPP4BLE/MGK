@@ -99,23 +99,29 @@ void Matrix4x4::multiply(Matrix4x4 m1, Matrix4x4 m2) {
                        m1.entries[11] * m2.entries[12];
     this->entries[9] = m1.entries[8] * m2.entries[1] + m1.entries[9] * m2.entries[5] + m1.entries[10] * m2.entries[9] +
                        m1.entries[11] * m2.entries[13];
-    this->entries[10] = m1.entries[8] * m2.entries[2] + m1.entries[9] * m2.entries[6] + m1.entries[10] * m2.entries[10] +
-                       m1.entries[11] * m2.entries[14];
-    this->entries[11] = m1.entries[8] * m2.entries[3] + m1.entries[9] * m2.entries[7] + m1.entries[10] * m2.entries[11] +
-                       m1.entries[11] * m2.entries[15];
+    this->entries[10] =
+            m1.entries[8] * m2.entries[2] + m1.entries[9] * m2.entries[6] + m1.entries[10] * m2.entries[10] +
+            m1.entries[11] * m2.entries[14];
+    this->entries[11] =
+            m1.entries[8] * m2.entries[3] + m1.entries[9] * m2.entries[7] + m1.entries[10] * m2.entries[11] +
+            m1.entries[11] * m2.entries[15];
 
-    this->entries[12] = m1.entries[12] * m2.entries[0] + m1.entries[13] * m2.entries[4] + m1.entries[14] * m2.entries[8] +
-                       m1.entries[15] * m2.entries[12];
-    this->entries[13] = m1.entries[12] * m2.entries[1] + m1.entries[13] * m2.entries[5] + m1.entries[14] * m2.entries[9] +
-                        m1.entries[15] * m2.entries[13];
-    this->entries[14] = m1.entries[12] * m2.entries[2] + m1.entries[13] * m2.entries[6] + m1.entries[14] * m2.entries[10] +
-                        m1.entries[15] * m2.entries[14];
-    this->entries[15] = m1.entries[12] * m2.entries[3] + m1.entries[13] * m2.entries[7] + m1.entries[14] * m2.entries[11] +
-                        m1.entries[15] * m2.entries[15];
+    this->entries[12] =
+            m1.entries[12] * m2.entries[0] + m1.entries[13] * m2.entries[4] + m1.entries[14] * m2.entries[8] +
+            m1.entries[15] * m2.entries[12];
+    this->entries[13] =
+            m1.entries[12] * m2.entries[1] + m1.entries[13] * m2.entries[5] + m1.entries[14] * m2.entries[9] +
+            m1.entries[15] * m2.entries[13];
+    this->entries[14] =
+            m1.entries[12] * m2.entries[2] + m1.entries[13] * m2.entries[6] + m1.entries[14] * m2.entries[10] +
+            m1.entries[15] * m2.entries[14];
+    this->entries[15] =
+            m1.entries[12] * m2.entries[3] + m1.entries[13] * m2.entries[7] + m1.entries[14] * m2.entries[11] +
+            m1.entries[15] * m2.entries[15];
 }
 
 void Matrix4x4::identity() {
-    memset(entries, 0, 16*sizeof(float));
+    memset(entries, 0, 16 * sizeof(float));
     this->entries[0] = 1.0;
     this->entries[5] = 1.0;
     this->entries[10] = 1.0;
@@ -140,4 +146,18 @@ void Matrix4x4::trans(Matrix4x4 m1) {
     this->entries[12] = m1.entries[3];
     this->entries[13] = m1.entries[7];
     this->entries[14] = m1.entries[11];
+}
+
+void Matrix4x4::inverse(Matrix4x4 m1) {
+    float det = this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
+                this->entries[4] * this->entries[9] * this->entries[14] * this->entries[3] +
+                this->entries[8] * this->entries[13] * this->entries[2] * this->entries[7] +
+                this->entries[12] * this->entries[1] * this->entries[6] * this->entries[11] -
+                this->entries[3] * this->entries[6] * this->entries[9] * this->entries[12] -
+                this->entries[7] * this->entries[10] * this->entries[13] * this->entries[0] -
+                this->entries[11] * this->entries[14] * this->entries[1] * this->entries[4] -
+                this->entries[15] * this->entries[2] * this->entries[5] * this->entries[8];
+    if (det != 0) {
+
+    } else std::cout << "Wyznacznik rowny 0, brak macierzy odwrotnej\n";
 }
