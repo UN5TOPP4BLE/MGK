@@ -3,6 +3,7 @@
 //
 
 #include <cstring>
+#include <iostream>
 #include "Matrix4x4.h"
 
 Matrix4x4::Matrix4x4() {
@@ -21,7 +22,7 @@ Matrix4x4::Matrix4x4(float e0, float e1, float e2, float e3, float e4, float e5,
     entries[7] = e7;
     entries[8] = e8;
     entries[9] = e9;
-    entries[10] = e1;
+    entries[10] = e10;
     entries[11] = e11;
     entries[12] = e12;
     entries[13] = e13;
@@ -39,4 +40,84 @@ Matrix4x4::Matrix4x4(const Matrix4x4 &mat) {
 
 Matrix4x4::~Matrix4x4() {
 
+}
+
+void Matrix4x4::set(int e, float value) {
+    this->entries[e] = value;
+}
+
+void Matrix4x4::show() {
+    std::cout << "| " << this->entries[0] << ", " << this->entries[1] << ", " << this->entries[2] << ", "
+              << this->entries[3] << " |\n";
+    std::cout << "| " << this->entries[4] << ", " << this->entries[5] << ", " << this->entries[6] << ", "
+              << this->entries[7] << " |\n";
+    std::cout << "| " << this->entries[8] << ", " << this->entries[9] << ", " << this->entries[10] << ", "
+              << this->entries[11] << " |\n";
+    std::cout << "| " << this->entries[12] << ", " << this->entries[13] << ", " << this->entries[14] << ", "
+              << this->entries[15] << " |\n";
+
+}
+
+void Matrix4x4::add(Matrix4x4 m1, Matrix4x4 m2) {
+    for (int i = 0; i < 16; i++) {
+        this->entries[i] = m1.entries[i] + m2.entries[i];
+    }
+}
+
+void Matrix4x4::sub(Matrix4x4 m1, Matrix4x4 m2) {
+    for (int i = 0; i < 16; i++) {
+        this->entries[i] = m1.entries[i] - m2.entries[i];
+    }
+}
+
+void Matrix4x4::multiply(float value) {
+    for (int i = 0; i < 16; i++) {
+        this->entries[i] *= value;
+    }
+}
+
+void Matrix4x4::multiply(Matrix4x4 m1, Matrix4x4 m2) {
+    this->entries[0] = m1.entries[0] * m2.entries[0] + m1.entries[1] * m2.entries[4] + m1.entries[2] * m2.entries[8] +
+                       m1.entries[3] * m2.entries[12];
+    this->entries[1] = m1.entries[0] * m2.entries[1] + m1.entries[1] * m2.entries[5] + m1.entries[2] * m2.entries[9] +
+                       m1.entries[3] * m2.entries[13];
+    this->entries[2] = m1.entries[0] * m2.entries[2] + m1.entries[1] * m2.entries[6] + m1.entries[2] * m2.entries[10] +
+                       m1.entries[3] * m2.entries[14];
+    this->entries[3] = m1.entries[0] * m2.entries[3] + m1.entries[1] * m2.entries[7] + m1.entries[2] * m2.entries[11] +
+                       m1.entries[3] * m2.entries[15];
+
+    this->entries[4] = m1.entries[4] * m2.entries[0] + m1.entries[5] * m2.entries[4] + m1.entries[6] * m2.entries[8] +
+                       m1.entries[7] * m2.entries[12];
+    this->entries[5] = m1.entries[4] * m2.entries[1] + m1.entries[5] * m2.entries[5] + m1.entries[6] * m2.entries[9] +
+                       m1.entries[7] * m2.entries[13];
+    this->entries[6] = m1.entries[4] * m2.entries[2] + m1.entries[5] * m2.entries[6] + m1.entries[6] * m2.entries[10] +
+                       m1.entries[7] * m2.entries[14];
+    this->entries[7] = m1.entries[4] * m2.entries[3] + m1.entries[5] * m2.entries[7] + m1.entries[6] * m2.entries[11] +
+                       m1.entries[7] * m2.entries[15];
+
+    this->entries[8] = m1.entries[8] * m2.entries[0] + m1.entries[9] * m2.entries[4] + m1.entries[10] * m2.entries[8] +
+                       m1.entries[11] * m2.entries[12];
+    this->entries[9] = m1.entries[8] * m2.entries[1] + m1.entries[9] * m2.entries[5] + m1.entries[10] * m2.entries[9] +
+                       m1.entries[11] * m2.entries[13];
+    this->entries[10] = m1.entries[8] * m2.entries[2] + m1.entries[9] * m2.entries[6] + m1.entries[10] * m2.entries[10] +
+                       m1.entries[11] * m2.entries[14];
+    this->entries[11] = m1.entries[8] * m2.entries[3] + m1.entries[9] * m2.entries[7] + m1.entries[10] * m2.entries[11] +
+                       m1.entries[11] * m2.entries[15];
+
+    this->entries[12] = m1.entries[12] * m2.entries[0] + m1.entries[13] * m2.entries[4] + m1.entries[14] * m2.entries[8] +
+                       m1.entries[15] * m2.entries[12];
+    this->entries[13] = m1.entries[12] * m2.entries[1] + m1.entries[13] * m2.entries[5] + m1.entries[14] * m2.entries[9] +
+                        m1.entries[15] * m2.entries[13];
+    this->entries[14] = m1.entries[12] * m2.entries[2] + m1.entries[13] * m2.entries[6] + m1.entries[14] * m2.entries[10] +
+                        m1.entries[15] * m2.entries[14];
+    this->entries[15] = m1.entries[12] * m2.entries[3] + m1.entries[13] * m2.entries[7] + m1.entries[14] * m2.entries[11] +
+                        m1.entries[15] * m2.entries[15];
+}
+
+void Matrix4x4::identity() {
+    memset(entries, 0, 16*sizeof(float));
+    this->entries[0] = 1.0;
+    this->entries[5] = 1.0;
+    this->entries[10] = 1.0;
+    this->entries[15] = 1.0;
 }

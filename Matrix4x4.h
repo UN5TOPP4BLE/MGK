@@ -23,6 +23,14 @@ public:
 
     ~Matrix4x4();
 
+    void set(int e, float value);
+    void show();
+    void add(Matrix4x4 m1, Matrix4x4 m2);
+    void sub(Matrix4x4 m1, Matrix4x4 m2);
+    void multiply(Matrix4x4 m1, Matrix4x4 m2);
+    void multiply(float value);
+    void identity();
+
 };
 
 
