@@ -15,6 +15,7 @@ float vectorAngle(Vector v1, Vector v2) {
     float licznik = c.getX() + c.getY() + c.getZ();
     float mianownik = std::abs(v1.length() * v2.length());
     return acos(licznik / mianownik) * (180 / M_PI);
+
 }
 
 

@@ -120,4 +120,5 @@ void Matrix4x4::identity() {
     this->entries[5] = 1.0;
     this->entries[10] = 1.0;
     this->entries[15] = 1.0;
+
 }

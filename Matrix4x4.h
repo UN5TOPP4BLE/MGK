@@ -31,6 +31,7 @@ public:
     void multiply(float value);
     void identity();
 
+
 };
 
 
