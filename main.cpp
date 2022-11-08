@@ -15,18 +15,15 @@ float vectorAngle(Vector v1, Vector v2) {
     float licznik = c.getX() + c.getY() + c.getZ();
     float mianownik = std::abs(v1.length() * v2.length());
     return acos(licznik / mianownik) * (180 / M_PI);
-
 }
 
 
 int main() {
 
-    Matrix4x4 m1(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16);
-    Matrix4x4 m2(-16,-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1);
+    Matrix4x4 m1(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+    Matrix4x4 m2(-16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1);
 
-    m1.multiply(m2,m1);
-    m1.show();
-    m1.identity();
+    m1.trans(m1);
     m1.show();
 
 

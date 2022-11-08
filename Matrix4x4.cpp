@@ -122,3 +122,22 @@ void Matrix4x4::identity() {
     this->entries[15] = 1.0;
 
 }
+
+void Matrix4x4::trans(Matrix4x4 m1) {
+
+    this->entries[1] = m1.entries[4];
+    this->entries[2] = m1.entries[8];
+    this->entries[3] = m1.entries[12];
+
+    this->entries[4] = m1.entries[1];
+    this->entries[6] = m1.entries[9];
+    this->entries[7] = m1.entries[13];
+
+    this->entries[8] = m1.entries[2];
+    this->entries[9] = m1.entries[6];
+    this->entries[11] = m1.entries[14];
+
+    this->entries[12] = m1.entries[3];
+    this->entries[13] = m1.entries[7];
+    this->entries[14] = m1.entries[11];
+}
