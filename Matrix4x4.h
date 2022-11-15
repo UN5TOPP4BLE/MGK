@@ -23,27 +23,25 @@ public:
 
     ~Matrix4x4();
 
-    void set(int e, float value);
+    void set(int entry, float value);
 
     void show();
 
-    void add(Matrix4x4 m1, Matrix4x4 m2);
+    void add(const Matrix4x4& m2);
 
-    void sub(Matrix4x4 m1, Matrix4x4 m2);
+    void sub(const Matrix4x4& m2);
 
-    void multiply(Matrix4x4 m1, Matrix4x4 m2);
+    void multiply(Matrix4x4 this_matrix, Matrix4x4 m2);
 
     void multiply(float value);
 
     void identity();
 
-    void trans(Matrix4x4 m1);
+    void trans(Matrix4x4 this_matrix);
 
-    void inverse(Matrix4x4 m1);
+    void inverse();
 
-    void det();
-
-    float det(Matrix4x4 m);
+    float det();
 
 
 };

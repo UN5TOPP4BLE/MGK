@@ -58,19 +58,19 @@ void Matrix4x4::show() {
 
 }
 
-void Matrix4x4::add(Matrix4x4 m1, Matrix4x4 m2) {
+void Matrix4x4::add(const Matrix4x4& matrix2) {
     for (int i = 0; i < 16; i++) {
-        this->entries[i] = m1.entries[i] + m2.entries[i];
+        this->entries[i] = this->entries[i] + matrix2.entries[i];
     }
 }
 
-void Matrix4x4::sub(Matrix4x4 m1, Matrix4x4 m2) {
+void Matrix4x4::sub(const Matrix4x4& m2) {
     for (int i = 0; i < 16; i++) {
-        this->entries[i] = m1.entries[i] - m2.entries[i];
+        this->entries[i] = this->entries[i] - m2.entries[i];
     }
 }
 
-void Matrix4x4::multiply(float value) {
+void Matrix4x4::multiply(const float value) {
     for (int i = 0; i < 16; i++) {
         this->entries[i] *= value;
     }
@@ -148,10 +148,10 @@ void Matrix4x4::trans(Matrix4x4 m1) {
     this->entries[14] = m1.entries[11];
 }
 
-void Matrix4x4::inverse(Matrix4x4 m1) {
+void Matrix4x4::inverse() {
 
-
-    if (1 != 0) {
+    float det = this->det();
+    if (det != 0) {
         Matrix4x4 C(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         C.entries[0] = this->entries[5] * this->entries[10] * this->entries[15] +
@@ -269,42 +269,15 @@ void Matrix4x4::inverse(Matrix4x4 m1) {
                         this->entries[10] * this->entries[1] * this->entries[4];
 
         for (int i = 0; i < 16; i++) {
-            //C.entries[i] *= 1 / det(this);
+            this->entries[i] = C.entries[i] / det;
+
         }
-        C.show();
 
 
-    } else std::cout << "Wyznacznik rowny 0, brak this->entriesy odwrotnej\n";
+    } else std::cout << "Wyznacznik rowny 0, brak macierzy odwrotnej\n";
 }
 
-void Matrix4x4::det() {
-    std::cout << this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
-                 this->entries[0] * this->entries[6] * this->entries[11] * this->entries[13] +
-                 this->entries[0] * this->entries[7] * this->entries[9] * this->entries[14] +
-                 this->entries[1] * this->entries[4] * this->entries[11] * this->entries[14] +
-                 this->entries[1] * this->entries[6] * this->entries[8] * this->entries[15] +
-                 this->entries[1] * this->entries[7] * this->entries[10] * this->entries[12] +
-                 this->entries[2] * this->entries[4] * this->entries[9] * this->entries[15] +
-                 this->entries[2] * this->entries[5] * this->entries[11] * this->entries[12] +
-                 this->entries[2] * this->entries[7] * this->entries[8] * this->entries[13] +
-                 this->entries[3] * this->entries[4] * this->entries[10] * this->entries[13] +
-                 this->entries[3] * this->entries[5] * this->entries[8] * this->entries[14] +
-                 this->entries[3] * this->entries[6] * this->entries[9] * this->entries[12] -
-                 this->entries[0] * this->entries[5] * this->entries[11] * this->entries[14] -
-                 this->entries[0] * this->entries[6] * this->entries[9] * this->entries[15] -
-                 this->entries[0] * this->entries[7] * this->entries[10] * this->entries[13] -
-                 this->entries[1] * this->entries[4] * this->entries[10] * this->entries[15] -
-                 this->entries[1] * this->entries[6] * this->entries[11] * this->entries[12] -
-                 this->entries[1] * this->entries[7] * this->entries[8] * this->entries[14] -
-                 this->entries[2] * this->entries[4] * this->entries[11] * this->entries[13] -
-                 this->entries[2] * this->entries[5] * this->entries[8] * this->entries[15] -
-                 this->entries[2] * this->entries[7] * this->entries[9] * this->entries[12] -
-                 this->entries[3] * this->entries[4] * this->entries[9] * this->entries[14] -
-                 this->entries[3] * this->entries[5] * this->entries[10] * this->entries[12] -
-                 this->entries[3] * this->entries[6] * this->entries[8] * this->entries[13];
-}
-
-float Matrix4x4::det(Matrix4x4 m) {
+float Matrix4x4::det() {
     return this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
            this->entries[0] * this->entries[6] * this->entries[11] * this->entries[13] +
            this->entries[0] * this->entries[7] * this->entries[9] * this->entries[14] +
