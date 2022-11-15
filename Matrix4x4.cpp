@@ -149,95 +149,186 @@ void Matrix4x4::trans(Matrix4x4 m1) {
 }
 
 void Matrix4x4::inverse(Matrix4x4 m1) {
-    float det = this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
-                this->entries[4] * this->entries[9] * this->entries[14] * this->entries[3] +
-                this->entries[8] * this->entries[13] * this->entries[2] * this->entries[7] +
-                this->entries[12] * this->entries[1] * this->entries[6] * this->entries[11] -
-                this->entries[3] * this->entries[6] * this->entries[9] * this->entries[12] -
-                this->entries[7] * this->entries[10] * this->entries[13] * this->entries[0] -
-                this->entries[11] * this->entries[14] * this->entries[1] * this->entries[4] -
-                this->entries[15] * this->entries[2] * this->entries[5] * this->entries[8];
-    if (det != 0) {
-        Matrix4x4 C(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-
-        C.entries[0] = this->entries[5]*this->entries[10]*this->entries[15] +
-                this->entries[9]*this->entries[14]*this->entries[7] +
-                this->entries[13]*this->entries[6]*this->entries[11] -
-                this->entries[7]*this->entries[10]*this->entries[13] -
-                this->entries[11]*this->entries[14]*this->entries[5] -
-                this->entries[15]*this->entries[6]*this->entries[9];
-
-        C.entries[4] = -1 * (this->entries[4]*this->entries[10]*this->entries[15] +
-                       this->entries[8]*this->entries[14]*this->entries[7] +
-                       this->entries[12]*this->entries[6]*this->entries[11] -
-                       this->entries[7]*this->entries[10]*this->entries[12] -
-                       this->entries[11]*this->entries[14]*this->entries[4] -
-                       this->entries[15]*this->entries[6]*this->entries[8]);
-
-        C.entries[8] = this->entries[4]*this->entries[9]*this->entries[15] +
-                       this->entries[8]*this->entries[13]*this->entries[7] +
-                       this->entries[12]*this->entries[5]*this->entries[11] -
-                       this->entries[7]*this->entries[9]*this->entries[12] -
-                       this->entries[11]*this->entries[13]*this->entries[4] -
-                       this->entries[15]*this->entries[5]*this->entries[8];
-
-        C.entries[12] = -1 * (this->entries[4]*this->entries[9]*this->entries[14] +
-                              this->entries[8]*this->entries[13]*this->entries[6] +
-                              this->entries[12]*this->entries[5]*this->entries[10] -
-                              this->entries[6]*this->entries[9]*this->entries[12] -
-                              this->entries[10]*this->entries[13]*this->entries[4] -
-                              this->entries[14]*this->entries[5]*this->entries[8]);
-
-        C.entries[1] = -1 * (this->entries[1]*this->entries[10]*this->entries[15] +
-                             this->entries[9]*this->entries[14]*this->entries[3] +
-                             this->entries[13]*this->entries[2]*this->entries[11] -
-                             this->entries[3]*this->entries[10]*this->entries[13] -
-                             this->entries[11]*this->entries[14]*this->entries[1] -
-                             this->entries[15]*this->entries[2]*this->entries[9]);
-
-        C.entries[5] = this->entries[0]*this->entries[10]*this->entries[15] +
-                       this->entries[8]*this->entries[14]*this->entries[3] +
-                       this->entries[12]*this->entries[2]*this->entries[11] -
-                       this->entries[3]*this->entries[10]*this->entries[12] -
-                       this->entries[11]*this->entries[14]*this->entries[0] -
-                       this->entries[15]*this->entries[2]*this->entries[8];
-
-        C.entries[9] = -1 * (this->entries[0]*this->entries[9]*this->entries[15] +
-                       this->entries[8]*this->entries[13]*this->entries[3] +
-                       this->entries[12]*this->entries[1]*this->entries[11] -
-                       this->entries[3]*this->entries[9]*this->entries[12] -
-                       this->entries[11]*this->entries[13]*this->entries[0] -
-                       this->entries[15]*this->entries[1]*this->entries[8]);
-
-        /*
 
 
+    if (1 != 0) {
+        Matrix4x4 C(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        C.entries[0] = this->entries[5] * this->entries[10] * this->entries[15] +
+                       this->entries[9] * this->entries[14] * this->entries[7] +
+                       this->entries[13] * this->entries[6] * this->entries[11] -
+                       this->entries[7] * this->entries[10] * this->entries[13] -
+                       this->entries[11] * this->entries[14] * this->entries[5] -
+                       this->entries[15] * this->entries[6] * this->entries[9];
+
+        C.entries[4] = -1 * (this->entries[4] * this->entries[10] * this->entries[15] +
+                             this->entries[8] * this->entries[14] * this->entries[7] +
+                             this->entries[12] * this->entries[6] * this->entries[11] -
+                             this->entries[7] * this->entries[10] * this->entries[12] -
+                             this->entries[11] * this->entries[14] * this->entries[4] -
+                             this->entries[15] * this->entries[6] * this->entries[8]);
+
+        C.entries[8] = this->entries[4] * this->entries[9] * this->entries[15] +
+                       this->entries[8] * this->entries[13] * this->entries[7] +
+                       this->entries[12] * this->entries[5] * this->entries[11] -
+                       this->entries[7] * this->entries[9] * this->entries[12] -
+                       this->entries[11] * this->entries[13] * this->entries[4] -
+                       this->entries[15] * this->entries[5] * this->entries[8];
+
+        C.entries[12] = -1 * (this->entries[4] * this->entries[9] * this->entries[14] +
+                              this->entries[8] * this->entries[13] * this->entries[6] +
+                              this->entries[12] * this->entries[5] * this->entries[10] -
+                              this->entries[6] * this->entries[9] * this->entries[12] -
+                              this->entries[10] * this->entries[13] * this->entries[4] -
+                              this->entries[14] * this->entries[5] * this->entries[8]);
+
+        C.entries[1] = -1 * (this->entries[1] * this->entries[10] * this->entries[15] +
+                             this->entries[9] * this->entries[14] * this->entries[3] +
+                             this->entries[13] * this->entries[2] * this->entries[11] -
+                             this->entries[3] * this->entries[10] * this->entries[13] -
+                             this->entries[11] * this->entries[14] * this->entries[1] -
+                             this->entries[15] * this->entries[2] * this->entries[9]);
+
+        C.entries[5] = this->entries[0] * this->entries[10] * this->entries[15] +
+                       this->entries[8] * this->entries[14] * this->entries[3] +
+                       this->entries[12] * this->entries[2] * this->entries[11] -
+                       this->entries[3] * this->entries[10] * this->entries[12] -
+                       this->entries[11] * this->entries[14] * this->entries[0] -
+                       this->entries[15] * this->entries[2] * this->entries[8];
+
+        C.entries[9] = -1 * (this->entries[0] * this->entries[9] * this->entries[15] +
+                             this->entries[8] * this->entries[13] * this->entries[3] +
+                             this->entries[12] * this->entries[1] * this->entries[11] -
+                             this->entries[3] * this->entries[9] * this->entries[12] -
+                             this->entries[11] * this->entries[13] * this->entries[0] -
+                             this->entries[15] * this->entries[1] * this->entries[8]);
+
+        C.entries[13] = this->entries[0] * this->entries[9] * this->entries[14] +
+                        this->entries[8] * this->entries[13] * this->entries[2] +
+                        this->entries[12] * this->entries[1] * this->entries[10] -
+                        this->entries[2] * this->entries[9] * this->entries[12] -
+                        this->entries[10] * this->entries[13] * this->entries[0] -
+                        this->entries[14] * this->entries[1] * this->entries[8];
+
+        C.entries[2] = this->entries[1] * this->entries[6] * this->entries[15] +
+                       this->entries[5] * this->entries[14] * this->entries[3] +
+                       this->entries[13] * this->entries[2] * this->entries[7] -
+                       this->entries[3] * this->entries[6] * this->entries[13] -
+                       this->entries[7] * this->entries[14] * this->entries[1] -
+                       this->entries[15] * this->entries[2] * this->entries[5];
+
+        C.entries[6] = -1 * (this->entries[0] * this->entries[6] * this->entries[15] +
+                             this->entries[4] * this->entries[14] * this->entries[3] +
+                             this->entries[12] * this->entries[2] * this->entries[7] -
+                             this->entries[3] * this->entries[6] * this->entries[12] -
+                             this->entries[7] * this->entries[14] * this->entries[0] -
+                             this->entries[15] * this->entries[2] * this->entries[4]);
+
+        C.entries[10] = this->entries[0] * this->entries[5] * this->entries[15] +
+                        this->entries[4] * this->entries[13] * this->entries[3] +
+                        this->entries[12] * this->entries[1] * this->entries[7] -
+                        this->entries[3] * this->entries[5] * this->entries[12] -
+                        this->entries[7] * this->entries[13] * this->entries[0] -
+                        this->entries[15] * this->entries[1] * this->entries[4];
+
+        C.entries[14] = -1 * (this->entries[0] * this->entries[5] * this->entries[14] +
+                              this->entries[4] * this->entries[13] * this->entries[2] +
+                              this->entries[12] * this->entries[1] * this->entries[6] -
+                              this->entries[2] * this->entries[5] * this->entries[12] -
+                              this->entries[6] * this->entries[13] * this->entries[0] -
+                              this->entries[14] * this->entries[1] * this->entries[4]);
+
+        C.entries[3] = this->entries[1] * this->entries[6] * this->entries[11] +
+                       this->entries[5] * this->entries[10] * this->entries[3] +
+                       this->entries[9] * this->entries[2] * this->entries[7] -
+                       this->entries[3] * this->entries[6] * this->entries[9] -
+                       this->entries[7] * this->entries[10] * this->entries[1] -
+                       this->entries[11] * this->entries[2] * this->entries[5];
 
 
+        C.entries[7] = this->entries[0] * this->entries[6] * this->entries[11] +
+                       this->entries[4] * this->entries[10] * this->entries[3] +
+                       this->entries[8] * this->entries[2] * this->entries[7] -
+                       this->entries[3] * this->entries[6] * this->entries[8] -
+                       this->entries[7] * this->entries[10] * this->entries[0] -
+                       this->entries[11] * this->entries[2] * this->entries[4];
 
-        C.entries[13] (2,4)
-
-        C.entries[2] (3,1)
-
-        C.entries[6] (3,2)
-
-        C.entries[10] (3,3)
-
-        C.entries[14] (3,4)
-
-        C.entries[3] (4,1)
-
-        C.entries[7] (4,2)
-
-        C.entries[11] (4,3)
-
-        C.entries[15] (4,4)
-
-         */
+        C.entries[11] = -1 * (this->entries[0] * this->entries[5] * this->entries[11] +
+                              this->entries[4] * this->entries[9] * this->entries[3] +
+                              this->entries[8] * this->entries[1] * this->entries[7] -
+                              this->entries[3] * this->entries[5] * this->entries[8] -
+                              this->entries[7] * this->entries[9] * this->entries[0] -
+                              this->entries[11] * this->entries[1] * this->entries[4]);
 
 
-        std::cout<<C.entries[9];
+        C.entries[15] = this->entries[0] * this->entries[5] * this->entries[10] +
+                        this->entries[4] * this->entries[9] * this->entries[2] +
+                        this->entries[8] * this->entries[1] * this->entries[6] -
+                        this->entries[2] * this->entries[5] * this->entries[8] -
+                        this->entries[6] * this->entries[9] * this->entries[0] -
+                        this->entries[10] * this->entries[1] * this->entries[4];
+
+        for (int i = 0; i < 16; i++) {
+            //C.entries[i] *= 1 / det(this);
+        }
+        C.show();
 
 
-    } else std::cout << "Wyznacznik rowny 0, brak macierzy odwrotnej\n";
+    } else std::cout << "Wyznacznik rowny 0, brak this->entriesy odwrotnej\n";
 }
+
+void Matrix4x4::det() {
+    std::cout << this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
+                 this->entries[0] * this->entries[6] * this->entries[11] * this->entries[13] +
+                 this->entries[0] * this->entries[7] * this->entries[9] * this->entries[14] +
+                 this->entries[1] * this->entries[4] * this->entries[11] * this->entries[14] +
+                 this->entries[1] * this->entries[6] * this->entries[8] * this->entries[15] +
+                 this->entries[1] * this->entries[7] * this->entries[10] * this->entries[12] +
+                 this->entries[2] * this->entries[4] * this->entries[9] * this->entries[15] +
+                 this->entries[2] * this->entries[5] * this->entries[11] * this->entries[12] +
+                 this->entries[2] * this->entries[7] * this->entries[8] * this->entries[13] +
+                 this->entries[3] * this->entries[4] * this->entries[10] * this->entries[13] +
+                 this->entries[3] * this->entries[5] * this->entries[8] * this->entries[14] +
+                 this->entries[3] * this->entries[6] * this->entries[9] * this->entries[12] -
+                 this->entries[0] * this->entries[5] * this->entries[11] * this->entries[14] -
+                 this->entries[0] * this->entries[6] * this->entries[9] * this->entries[15] -
+                 this->entries[0] * this->entries[7] * this->entries[10] * this->entries[13] -
+                 this->entries[1] * this->entries[4] * this->entries[10] * this->entries[15] -
+                 this->entries[1] * this->entries[6] * this->entries[11] * this->entries[12] -
+                 this->entries[1] * this->entries[7] * this->entries[8] * this->entries[14] -
+                 this->entries[2] * this->entries[4] * this->entries[11] * this->entries[13] -
+                 this->entries[2] * this->entries[5] * this->entries[8] * this->entries[15] -
+                 this->entries[2] * this->entries[7] * this->entries[9] * this->entries[12] -
+                 this->entries[3] * this->entries[4] * this->entries[9] * this->entries[14] -
+                 this->entries[3] * this->entries[5] * this->entries[10] * this->entries[12] -
+                 this->entries[3] * this->entries[6] * this->entries[8] * this->entries[13];
+}
+
+float Matrix4x4::det(Matrix4x4 m) {
+    return this->entries[0] * this->entries[5] * this->entries[10] * this->entries[15] +
+           this->entries[0] * this->entries[6] * this->entries[11] * this->entries[13] +
+           this->entries[0] * this->entries[7] * this->entries[9] * this->entries[14] +
+           this->entries[1] * this->entries[4] * this->entries[11] * this->entries[14] +
+           this->entries[1] * this->entries[6] * this->entries[8] * this->entries[15] +
+           this->entries[1] * this->entries[7] * this->entries[10] * this->entries[12] +
+           this->entries[2] * this->entries[4] * this->entries[9] * this->entries[15] +
+           this->entries[2] * this->entries[5] * this->entries[11] * this->entries[12] +
+           this->entries[2] * this->entries[7] * this->entries[8] * this->entries[13] +
+           this->entries[3] * this->entries[4] * this->entries[10] * this->entries[13] +
+           this->entries[3] * this->entries[5] * this->entries[8] * this->entries[14] +
+           this->entries[3] * this->entries[6] * this->entries[9] * this->entries[12] -
+           this->entries[0] * this->entries[5] * this->entries[11] * this->entries[14] -
+           this->entries[0] * this->entries[6] * this->entries[9] * this->entries[15] -
+           this->entries[0] * this->entries[7] * this->entries[10] * this->entries[13] -
+           this->entries[1] * this->entries[4] * this->entries[10] * this->entries[15] -
+           this->entries[1] * this->entries[6] * this->entries[11] * this->entries[12] -
+           this->entries[1] * this->entries[7] * this->entries[8] * this->entries[14] -
+           this->entries[2] * this->entries[4] * this->entries[11] * this->entries[13] -
+           this->entries[2] * this->entries[5] * this->entries[8] * this->entries[15] -
+           this->entries[2] * this->entries[7] * this->entries[9] * this->entries[12] -
+           this->entries[3] * this->entries[4] * this->entries[9] * this->entries[14] -
+           this->entries[3] * this->entries[5] * this->entries[10] * this->entries[12] -
+           this->entries[3] * this->entries[6] * this->entries[8] * this->entries[13];
+}
+
+

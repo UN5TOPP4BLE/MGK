@@ -41,8 +41,11 @@ public:
 
     void inverse(Matrix4x4 m1);
 
+    void det();
+
+    float det(Matrix4x4 m);
+
 
 };
-
 
 #endif //MGK_MATRIX4X4_H

@@ -25,6 +25,7 @@ int main() {
 
     m1.inverse(m1);
     m1.show();
+    std::cout<<m1.det();
 
 
 //ZADANIE 1 - WEKTORY
