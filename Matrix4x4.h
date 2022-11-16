@@ -17,6 +17,8 @@ public:
               float e8, float e9, float e10, float e11,
               float e12, float e13, float e14, float e15);
 
+    Matrix4x4(float v1, float v2, float v3, float v4);
+
     Matrix4x4(const float *f);
 
     Matrix4x4(const Matrix4x4 &mat);
@@ -43,7 +45,14 @@ public:
 
     float det();
 
+    void translate(float x, float y, float z);
 
+    void scale(float x, float y, float z);
+
+    void createRotation(char char_axis, float angle);
+
+
+    void showVector();
 };
 
 #endif //MGK_MATRIX4X4_H
