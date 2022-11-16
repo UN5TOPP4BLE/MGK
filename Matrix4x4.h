@@ -29,9 +29,9 @@ public:
 
     void show();
 
-    void add(const Matrix4x4& m2);
+    void add(const Matrix4x4 &m2);
 
-    void sub(const Matrix4x4& m2);
+    void sub(const Matrix4x4 &m2);
 
     void multiply(Matrix4x4 this_matrix, Matrix4x4 m2);
 

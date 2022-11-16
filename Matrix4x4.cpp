@@ -60,7 +60,8 @@ void Matrix4x4::show() {
 }
 
 void Matrix4x4::showVector() {
-    std::cout<<"[ "<<this->entries[0] << ", " << this->entries[4] << ", " << this->entries[8] << ", " << this->entries[12] << " ]\n\n";
+    std::cout << "[ " << this->entries[0] << ", " << this->entries[4] << ", " << this->entries[8] << ", "
+              << this->entries[12] << " ]\n\n";
 }
 
 void Matrix4x4::add(const Matrix4x4 &matrix2) {
@@ -346,7 +347,7 @@ void Matrix4x4::createRotation(char axis, float angle) {
 }
 
 Matrix4x4::Matrix4x4(float v1, float v2, float v3, float v4) {
-    for(int i=0; i<16; i++){
+    for (int i = 0; i < 16; i++) {
         entries[i] = 0;
     }
     entries[0] = v1;
