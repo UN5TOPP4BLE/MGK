@@ -6,38 +6,50 @@
 #define MGK_VECTOR_H
 
 
-class Vector
-{
+#include <string>
+
+class Vector {
+
+private:
+    double x, y, z, w;
+
 public:
-    float x=0.0,y=0.0,z=0.0;
+    Vector(double x, double y, double z);
 
-    Vector();
+    Vector(double x, double y, double z, double w);
 
-    Vector(float x, float y, float z);
-    Vector(Vector p1, Vector p2);
+    virtual ~Vector();
 
-    float getX() const;
-    float getY() const;
-    float getZ() const;
+    double getX() const;
 
-    void setX(float x);
-    void setY(float y);
-    void setZ(float z);
+    double getY() const;
 
-    ~Vector();
+    double getZ() const;
 
-    void add(Vector v);
-    void sub(Vector v);
-    void multiply(float f);
-    float length();
-    void normalize();
-    void dot(Vector v1, Vector v2);
-    void cross(Vector v1, Vector v2);
+    double getW() const;
 
-    void setVector(float xx, float yy, float zz);
-    void setVector(Vector v);
-    void showVector();
-    void showSumVector();
+    void show();
+
+    void set(double x1, double y1, double z1, double w1);
+
+    void add(const Vector &v1);
+
+    void sub(const Vector &v1);
+
+    Vector multiply(double a) const;
+
+    double dot(const Vector &v1) const;
+
+    Vector cross(const Vector &v1) const;
+
+    Vector normalise() const;
+
+    bool isEqual(const Vector &v1) const;
+
+    double length() const;
+
+    double angle(const Vector &v1) const;
+
 };
 
 

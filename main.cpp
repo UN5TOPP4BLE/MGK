@@ -7,96 +7,157 @@
 #include "Vector.h"
 #include "Matrix4x4.h"
 #include <cmath>
+#include "Quaternion.h"
 
-float vectorAngle(Vector v1, Vector v2) {
-    Vector c(0, 0, 0);
-    c.dot(v1, v2);
+//float vectorAngle(Vector v1, Vector v2) {
+//    Vector c(0, 0, 0);
+//    c.dot(v1, v2);
+//
+//    float licznik = c.getX() + c.getY() + c.getZ();
+//    float mianownik = std::abs(v1.length() * v2.length());
+//    return acos(licznik / mianownik) * (180 / M_PI);
+//}
 
-    float licznik = c.getX() + c.getY() + c.getZ();
-    float mianownik = std::abs(v1.length() * v2.length());
-    return acos(licznik / mianownik) * (180 / M_PI);
+Vector rotatePoint(Quaternion q1, Vector v1, Vector axisV, double angle) {
+    q1.rotationQuaternion(v1, angle);
+    q1.inverse();
+    Vector v2 = Quaternion::rotate(v1, axisV, angle);
+    return v2;
 }
-
 
 int main() {
 
-    Matrix4x4 m00(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    Matrix4x4 m01(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-    Matrix4x4 m02(-16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1);
-    Matrix4x4 m03(1, 2, 3, 4, 2, 3, 1, 2, 1, 1, 1, -1, 1, 0, -2, -6);
+    Quaternion q1 = Quaternion(1, 2, 3, 4);
+    std::cout << "Q1: ";
+    q1.show();
 
-    std::cout << "M01: \n";
-    m01.show();
-    std::cout << "M02: \n";
-    m02.show();
-    std::cout << "M03: \n";
-    m03.show();
+    Quaternion q2 = Quaternion(2, 3, 4, 5);
+    std::cout << "Q2: ";
+    q2.show();
 
-    std::cout << "M01 + MO2 = \n";
-    m01.add(m02);
-    m01.show();
+    Quaternion q0 = Quaternion(0, 0, 0, 0);
 
-    std::cout << "M01 - MO2 = \n";
-    m01.sub(m02);
-    m01.show();
+    //dodawanie
+    std::cout << "Q1 + Q2:  ";
+    q0.add(q1);
+    q0.add(q2);
+    q0.show();
 
-    std::cout << "M01 * 3.25 = \n";
-    m01.multiply(3.25);
-    m01.show();
+    //odejmowanie
+    std::cout << "Q2 - Q1:  ";
+    q0.set(0, 0, 0, 0);
+    q0.add(q2);
+    q0.sub(q1);
+    q0.show();
 
-    std::cout << "M01 / 1.625 = \n";
-    m01.multiply(1 / 1.625);
-    m01.show();
+    //mnozenie
+    std::cout << "Q1 * Q2:  ";
+    q0 = q1.multiply(q2);
+    q0.show();
+    std::cout << "Q2 * Q1:  ";
+    q0 = q2.multiply(q1);
+    q0.show();
 
-    std::cout << "M01 * M02 = \n";
-    Matrix4x4 m01copy(m01);
-    m01copy.multiply(m01, m02);
-    m01copy.show();
+    //dzielenie
+    std::cout << "Q1 / Q2:  ";
+    q0 = q1.divide(q2);
+    q0.show();
+    std::cout << "Q2 / Q1:  ";
+    q0 = q2.divide(q1);
+    q0.show();
 
-    std::cout << "M01 * M02 = \n";
-    Matrix4x4 m02copy(m02);
-    m02copy.multiply(m02, m01);
-    m02copy.show();
-
-    std::cout << "M01 jako macierz jednostkowa: \n";
-    m01.identity();
-    m01.show();
-
-    std::cout << "M02 jako macierz transponowana: \n";
-    m02.trans(m02);
-    m02.show();
-
-    std::cout << "Wyznacznik macierzy M03: \n";
-    std::cout << m03.det() << "\n\n";
-
-    std::cout << "M03 jako macierz odwrotna: \n";
-    m03.inverse();
-    m03.show();
-
-    std::cout << "Translacja macierzy M01 o wektor [3,8,-25]: \n";
-    m01.translate(3,8,-25);
-    m01.show();
-
-    std::cout << "Przeskalowanie macierzy M01 na [3.5,0.01,-999]: \n";
-    m01.scale(3.5, 0.01, -999);
-    m01.show();
-
-
-    //ZADANIA KONTROLNE
-
-    std::cout<<"\n\n";
-    std::cout<<"Wektor [1,0,0,1] obroc o 90 stopni wokol osi Y\n";
-    Matrix4x4 m05(1,0,0,1);
-    Matrix4x4 mRot(m05);
-    mRot.createRotation('y', 90);
-    m05.multiply(mRot,m05);
-    m05.showVector();
+    //obrot punktu [-1,-1,-1] wokol osi X o 270 stopni
+    q0.set(0, 0, 0, 0);
+    Vector v1 = Vector(-1, -1, -1);
+    Vector axis = Vector(1, 0, 0);
+    Vector v2 = rotatePoint(q0, v1, axis, 270);
+    v1.show();
+    std::cout << " obrocony o 270 stopni wokol osi X ma wspolrzedne  ";
+    v2.show();
 
 
 
+    return 0;
 
 
-
+//
+//    Matrix4x4 m00(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//    Matrix4x4 m01(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+//    Matrix4x4 m02(-16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1);
+//    Matrix4x4 m03(1, 2, 3, 4, 2, 3, 1, 2, 1, 1, 1, -1, 1, 0, -2, -6);
+//
+//    std::cout << "M01: \n";
+//    m01.show();
+//    std::cout << "M02: \n";
+//    m02.show();
+//    std::cout << "M03: \n";
+//    m03.show();
+//
+//    std::cout << "M01 + MO2 = \n";
+//    m01.add(m02);
+//    m01.show();
+//
+//    std::cout << "M01 - MO2 = \n";
+//    m01.sub(m02);
+//    m01.show();
+//
+//    std::cout << "M01 * 3.25 = \n";
+//    m01.multiply(3.25);
+//    m01.show();
+//
+//    std::cout << "M01 / 1.625 = \n";
+//    m01.multiply(1 / 1.625);
+//    m01.show();
+//
+//    std::cout << "M01 * M02 = \n";
+//    Matrix4x4 m01copy(m01);
+//    m01copy.multiply(m01, m02);
+//    m01copy.show();
+//
+//    std::cout << "M01 * M02 = \n";
+//    Matrix4x4 m02copy(m02);
+//    m02copy.multiply(m02, m01);
+//    m02copy.show();
+//
+//    std::cout << "M01 jako macierz jednostkowa: \n";
+//    m01.identity();
+//    m01.show();
+//
+//    std::cout << "M02 jako macierz transponowana: \n";
+//    m02.trans(m02);
+//    m02.show();
+//
+//    std::cout << "Wyznacznik macierzy M03: \n";
+//    std::cout << m03.det() << "\n\n";
+//
+//    std::cout << "M03 jako macierz odwrotna: \n";
+//    m03.inverse();
+//    m03.show();
+//
+//    std::cout << "Translacja macierzy M01 o wektor [3,8,-25]: \n";
+//    m01.translate(3,8,-25);
+//    m01.show();
+//
+//    std::cout << "Przeskalowanie macierzy M01 na [3.5,0.01,-999]: \n";
+//    m01.scale(3.5, 0.01, -999);
+//    m01.show();
+//
+//
+//    //ZADANIA KONTROLNE
+//
+//    std::cout<<"\n\n";
+//    std::cout<<"Wektor [1,0,0,1] obroc o 90 stopni wokol osi Y\n";
+//    Matrix4x4 m05(1,0,0,1);
+//    Matrix4x4 mRot(m05);
+//    mRot.createRotation('y', 90);
+//    m05.multiply(mRot,m05);
+//    m05.showVector();
+//
+//
+//
+//
+//
+//
 
 //ZADANIE 1 - WEKTORY
 //------------------------------------------------

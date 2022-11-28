@@ -6,107 +6,86 @@
 #include <iostream>
 #include <cmath>
 
-void Vector::add(Vector v)
-{
-    this->x += v.x;
-    this->y += v.y;
-    this->z += v.z;
+Vector::Vector(double x, double y, double z) : x(x), y(y), z(z), w(0) {}
+
+Vector::Vector(double x, double y, double z, double w) : x(x), y(y), z(z), w(w) {}
+
+Vector::~Vector() = default;
+
+void Vector::set(double x1, double y1, double z1, double w1) {
+    this->x = x1;
+    this->y = y1;
+    this->z = z1;
+    this->w = w1;
 }
 
-void Vector::sub(Vector v)
-{
-    this->x -= v.x;
-    this->y -= v.y;
-    this->z -= v.z;
+void Vector::show() {
+    std::cout << "[" << this->x << ", " << this->y << ", " << this->z << "]";
 }
 
-Vector::Vector() {
-
+Vector Vector::normalise() const {
+    double mianownik = this->length();
+    if (mianownik != 0.0) return {x / mianownik, y / mianownik, z / mianownik, w / mianownik};
 }
 
-Vector::Vector(Vector p1, Vector p2) {
-
-}
-
-
-Vector::~Vector() {
-
-}
-
-float Vector::getX() const {
+double Vector::getX() const {
     return x;
 }
 
-float Vector::getY() const {
+double Vector::getY() const {
     return y;
 }
 
-float Vector::getZ() const {
+double Vector::getZ() const {
     return z;
 }
 
-Vector::Vector(float x, float y, float z) : x(x), y(y), z(z) {}
-
-void Vector::showVector() {
-    std::cout<<"["<<this->x<<", "<<this->y<<", "<<this->z<<"]\n";
+double Vector::getW() const {
+    return w;
 }
 
-void Vector::setX(float x) {
-    Vector::x = x;
+
+void Vector::add(const Vector &v1) {
+    x += v1.x;
+    y += v1.y;
+    z += v1.z;
+    w += v1.w;
 }
 
-void Vector::setY(float y) {
-    Vector::y = y;
+void Vector::sub(const Vector &v1) {
+    x -= v1.x;
+    y -= v1.y;
+    z -= v1.z;
+    w -= v1.w;
 }
 
-void Vector::setZ(float z) {
-    Vector::z = z;
+Vector Vector::multiply(double a) const {
+    return {a * x, a * y, a * z, a * w};
 }
 
-void Vector::setVector(float xx, float yy, float zz) {
-    this->x = xx;
-    this->y = yy;
-    this->z = zz;
+double Vector::dot(const Vector &v1) const {
+    return x * v1.x + y * v1.y + z * v1.z + w * v1.w;
 }
 
-void Vector::multiply(float f) {
-    this->x *= f;
-    this->y *= f;
-    this->z *= f;
+Vector Vector::cross(const Vector &v1) const {
+    //w musi byc rowne 0
+    if (v1.getW() == 0 && w == 0) {
+        return {y * v1.z - z * v1.y, z * v1.x - x * v1.z, x * v1.y - y * v1.x, 0};
+    } else std::cout << "W rozne od 0!\n";
 }
 
-void Vector::setVector(Vector v) {
-    this->x = v.x;
-    this->y = v.y;
-    this->z = v.z;
+double Vector::angle(const Vector &v1) const {
+    return acos(this->dot(v1) / (this->length() * v1.length())) * 180 / M_PI;
 }
 
-float Vector::length() {
-    return sqrt(this->x * this->x +
-                this->y * this->y +
-                this->z * this->z);
+double Vector::length() const {
+    return sqrt(x * x + y * y + z * z + w * w);
 }
 
-void Vector::normalize() {
-    float l = this->length();
-    if(l!=0) {
-        this->multiply(1/l);
-    }
-    else std::cout << "Nie mozna dzielic przez 0\n";
+bool Vector::isEqual(const Vector &v1) const {
+    //czy ktorakolwiek wartosc jest inna
+    if (x != v1.x || y != v1.y || z != v1.z || w != v1.w) return false;
+    else return true;
 }
 
-void Vector::dot(Vector v1, Vector v2) {
-    this->x = v1.x * v2.x;
-    this->y = v1.y * v2.y;
-    this->z = v1.z * v2.z;
-}
 
-void Vector::cross(Vector v1, Vector v2) {
-    this->x = v1.y * v2.z - v1.z * v2.y;
-    this->y = v1.z * v2.x - v1.x * v2.z;
-    this->z = v1.x * v2.y - v1.y * v2.x;
-}
-
-void Vector::showSumVector() {
-    std::cout<<"["<<this->x<<", "<<this->y<<", "<<this->z<<"] = "<<(float)this->x + (float)this->y + (float)this->z<<"\n";
-}
