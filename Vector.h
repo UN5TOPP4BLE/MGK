@@ -50,6 +50,11 @@ public:
 
     double angle(const Vector &v1) const;
 
+    bool operator==(const Vector& vec) const;
+    std::string str() const;
+    Vector copy() const;
+
+    double calculateAngle(const Vector v1) ;
 };
 
 

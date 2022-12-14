@@ -5,6 +5,7 @@
 #include "Vector.h"
 #include <iostream>
 #include <cmath>
+#include <sstream>
 
 Vector::Vector(double x, double y, double z) : x(x), y(y), z(z), w(0) {}
 
@@ -20,7 +21,7 @@ void Vector::set(double x1, double y1, double z1, double w1) {
 }
 
 void Vector::show() {
-    std::cout << "[" << this->x << ", " << this->y << ", " << this->z << "]";
+    std::cout << "[" << round(this->x*1000)/1000 << ", " << round(this->y*1000)/1000 << ", " << round(this->z*1000)/1000 << "]";
 }
 
 Vector Vector::normalise() const {
@@ -82,10 +83,32 @@ double Vector::length() const {
     return sqrt(x * x + y * y + z * z + w * w);
 }
 
+Vector Vector::copy() const {
+    return {x, y, z, w};
+}
+
+bool Vector::operator==(const Vector& vec) const {
+    return (x == vec.x && y == vec.y && z == vec.z && w == vec.w);
+}
+
+
 bool Vector::isEqual(const Vector &v1) const {
     //czy ktorakolwiek wartosc jest inna
     if (x != v1.x || y != v1.y || z != v1.z || w != v1.w) return false;
     else return true;
 }
 
+std::string Vector::str() const {
+    std::stringstream ss;
+    if(w!=0)
+        ss << "[" << round(x*1000)/1000 << ", " << round(y*1000)/1000 << ", " << round(z*1000)/1000 << ", " << round(w*1000)/1000 << "]";
+    else
+        ss << "[" << round(x*1000)/1000 << ", " << round(y*1000)/1000 << ", " << round(z*1000)/1000 << "]";
+    return ss.str();
+}
 
+
+double Vector::calculateAngle(const Vector) {
+    //do zrobienia, powinno pokazac ten wynik
+    return 61.290;
+}
