@@ -106,9 +106,3 @@ std::string Vector::str() const {
         ss << "[" << round(x*1000)/1000 << ", " << round(y*1000)/1000 << ", " << round(z*1000)/1000 << "]";
     return ss.str();
 }
-
-
-double Vector::calculateAngle(const Vector) {
-    //do zrobienia, powinno pokazac ten wynik
-    return 61.290;
-}

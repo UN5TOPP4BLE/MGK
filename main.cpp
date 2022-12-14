@@ -90,7 +90,7 @@ int main() {
 
 
     //zadanie 6
-    double a3 = p2.normal.calculateAngle(p1.normal);
+    double a3 = p2.normal.angle(p3.normal);
     std::cout << "\nZadanie 6 - znajdz kat miedzy plaszczyznami z zadania 5: " << a3 << " stopni";
 
     //zadanie 7
