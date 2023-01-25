@@ -5,6 +5,7 @@
 #include "Quaternion.h"
 #include <cmath>
 #include <iostream>
+#include <sstream>
 
 Quaternion::Quaternion(double a, const Vector &v) : a(a), v(v) {}
 
@@ -96,7 +97,7 @@ void Quaternion::inverse() {
     this->v = v.multiply(-1);
 }
 
-Vector Quaternion::rotate(Vector v1, const Vector &os, double angle) {
+Vector Quaternion::rotate(Vector v1, double angle, const Vector &os) {
     Quaternion q1 = Quaternion(0, 0, 0, 0);
     q1.rotationQuaternion(os, angle);
 
@@ -129,4 +130,36 @@ double Quaternion::getZ() const {
 
 void Quaternion::setA(double a1) {
     this->a = a1;
+}
+
+std::string Quaternion::str() const {
+    std::stringstream ss;
+    ss << round(a*1000)/1000 << " + " << round(v.getX()*1000)/1000 << "i + " << round(v.getY()*1000)/1000 << "j + " << round(v.getZ()*1000)/1000 << "k";
+    return ss.str();
+}
+
+Quaternion Quaternion::copy() const {
+    return {a, v};
+}
+
+bool Quaternion::isEqual(const Quaternion& q) const {
+    if (a != q.a || !this->v.isEqual(q.v)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+static double radians(double angle) {
+    return M_PI*angle/180.0;
+}
+
+void Quaternion::prepareQuaternion(double angle, const Vector& axis) {
+    double A = cos(radians(angle/2.0));
+
+    double a = axis.getX(), b = axis.getY(), c = axis.getZ();
+    double multiplier = sin(radians(angle/2.0)) / sqrt(a*a + b*b + c*c);
+
+    this->a = A;
+    this->v = axis.multiply(multiplier);
 }

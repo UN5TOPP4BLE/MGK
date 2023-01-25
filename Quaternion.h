@@ -46,9 +46,12 @@ public:
 
     void inverse();
 
-    static Vector rotate(Vector v1, const Vector &os, double angle);
+    static Vector rotate(Vector v1, double angle, const Vector &os);
 
-
+    std::string str() const;
+    Quaternion copy() const;
+    bool isEqual(const Quaternion& q) const;
+    void prepareQuaternion(double angle, const Vector& axis);
 };
 
 #endif //MGK_QUATERNION_H
